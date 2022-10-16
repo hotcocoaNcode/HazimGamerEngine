@@ -9,6 +9,7 @@ class Texture {
 	public:
 		GLuint ID;
 		GLenum type;
+		GLuint unit;
 		const char* nametype;
 
 		Texture(const char* image, const char* nt, GLenum texType, GLenum slot);

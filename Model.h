@@ -29,7 +29,7 @@ private:
 	std::vector<std::string> loadedTexName;
 	std::vector<Texture> loadedTex;
 
-	
+	std::string text;
 
 	void loadMesh(unsigned int indMesh);
 

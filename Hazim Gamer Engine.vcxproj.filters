@@ -108,10 +108,10 @@
     <Image Include="uv.png">
       <Filter>Resource Files\texture</Filter>
     </Image>
-    <Image Include="uv_1024x1024.png">
+    <Image Include="glTF\CesiumLogoFlat.png">
       <Filter>Resource Files\texture</Filter>
     </Image>
-    <Image Include="glTF\CesiumLogoFlat.png">
+    <Image Include="uv_1024x1024.png">
       <Filter>Resource Files\texture</Filter>
     </Image>
   </ItemGroup>

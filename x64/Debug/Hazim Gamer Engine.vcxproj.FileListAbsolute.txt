@@ -1,1 +1,2 @@
 C:\Users\Ethan Lee\source\repos\Hazim Gamer Engine\x64\Debug\Hazim Gamer Engine.exe
+C:\Users\Ethan Lee\source\repos\HazimGamerEngine\x64\Debug\Hazim Gamer Engine.exe

@@ -6,14 +6,17 @@
 Texture::Texture(const char* image, const char* nt, GLenum texType, GLenum slot) {
 	type = texType;
 	nametype = nt;
-	//useful asfuck
-	stbi_set_flip_vertically_on_load(1);
+
+	//For some reason it brokey everything. Maybe newer STB uses same texmap default???
+	//stbi_set_flip_vertically_on_load(true);
+	
 	// texure
 	int widthImg, heightImg, numColCh;
 	unsigned char* bytes = stbi_load(image, &widthImg, &heightImg, &numColCh, 0);
 
 	glGenTextures(1, &ID);
 	glActiveTexture(slot);
+	unit = slot;
 	glBindTexture(texType, ID);
 
 	glTexParameteri(texType, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -33,7 +36,7 @@ Texture::Texture(const char* image, const char* nt, GLenum texType, GLenum slot)
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthImg, heightImg, 0, GL_RED, GL_UNSIGNED_BYTE, bytes);
 	}
 	else {
-		throw std::invalid_argument("Well shit, your image isn't doing too well. That's a you problem :p");
+		throw std::invalid_argument("Well shit, your image isn't doing too well. That's a you problem :p (col_ch not 4, 3, or 1)");
 	}
 
 	glGenerateMipmap(texType);
@@ -42,16 +45,21 @@ Texture::Texture(const char* image, const char* nt, GLenum texType, GLenum slot)
 	glBindTexture(texType, 0);
 }
 
-void Texture::texUnit(Shader& shader, const char* uniform, GLuint unit) {
-	GLuint tex0Uni = glGetUniformLocation(shader.ID, "tex0");
+void Texture::texUnit(Shader& shader, const char* uniform, GLuint unit)
+{
+	// Gets the location of the uniform
+	GLuint texUni = glGetUniformLocation(shader.ID, uniform);
+	// Shader needs to be activated before changing the value of a uniform
 	shader.Activate();
-	glUniform1i(tex0Uni, 0);
+	// Sets the value of the uniform
+	glUniform1i(texUni, unit);
 }
 
-void Texture::Bind() {
+void Texture::Bind()
+{
+	glActiveTexture(GL_TEXTURE0 + unit);
 	glBindTexture(type, ID);
 }
-
 void Texture::Unbind() {
 	glBindTexture(type, 0);
 }

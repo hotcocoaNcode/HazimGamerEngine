@@ -17,8 +17,8 @@
 #include "Mesh.h"
 #include "Model.h"
 
-const unsigned int width = 1280;
-const unsigned int height = 720;
+const int width = 1280;
+const int height = 720;
 
 int main() {
 

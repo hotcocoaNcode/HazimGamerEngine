@@ -1,20 +1,26 @@
 #include "shaderClass.h"
 #include <iostream>
 
+
+inline bool fileexists(const std::string& name) {
+	std::ifstream f(name.c_str());
+	return f.good();
+}
+
 std::string get_file_contents(const char* filename)
 {
-	std::ifstream in(filename, std::ios::binary);
-	if (in)
-	{
-		std::string contents;
-		in.seekg(0, std::ios::end);
-		contents.resize(in.tellg());
-		in.seekg(0, std::ios::beg);
-		in.read(&contents[0], contents.size());
-		in.close();
-		return(contents);
+	if (fileexists(filename)) {
+		std::ifstream in(filename, std::ios::binary);
+		std::string content((std::istreambuf_iterator<char>(in)),
+			(std::istreambuf_iterator<char>()));
+		return content;
 	}
-	throw(errno);
+	else {
+		std::string failvar = "uhohwhoashit";
+		std::cout << "File \"" << filename << "\" not found... huge L. Returning with " << failvar << std::endl;
+		return failvar;
+	}
+	
 }
 
 Shader::Shader(const char* vertexFile, const char* fragmentFile) {

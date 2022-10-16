@@ -3,23 +3,28 @@
 Model::Model(const char* file)
 {
 	// Make a JSON object
-	std::string text = get_file_contents(file);
-	JSON = json::parse(text);
+	text = get_file_contents(file);
 
-	// Get the binary data
-	Model::file = file;
-	data = getData();
+	if (text != "uhohwhoashit") {
+		JSON = json::parse(text);
+		// Get the binary data
+		Model::file = file;
+		data = getData();
 
-	// Traverse all nodes
-	traverseNode(0);
+		// Traverse all nodes
+		traverseNode(0);
+	}
 }
 
 void Model::Draw(Shader& shader, Camera& camera)
 {
-	// Go over all meshes and draw each one
-	for (unsigned int i = 0; i < meshes.size(); i++)
-	{
-		meshes[i].Mesh::Draw(shader, camera, matricesMeshes[i]);
+	if (text != "uhohwhoashit") {
+
+		// Go over all meshes and draw each one
+		for (unsigned int i = 0; i < meshes.size(); i++)
+		{
+			meshes[i].Mesh::Draw(shader, camera, matricesMeshes[i]);
+		}
 	}
 }
 
