@@ -100,7 +100,7 @@ int main() {
 
 	//DRAW BACKROUND
 	glClearColor(0.39f, 0.39f, 0.39f, 1.00f);
-	glClear(GL_COLOR_BUFFER_BIT); //no fucking clue what a buffer bit is but docs said so
+	glClear(GL_COLOR_BUFFER_BIT); 
 
 	//swap
 	glfwSwapBuffers(window);
@@ -109,21 +109,30 @@ int main() {
 
 	Camera cam(width, height, glm::vec3(0.0f, 0.5f, 2.5f));
 
-	Model model("sword/scene.gltf");
+	
+
+	Model modelArr[] = {
+		Model("sword/scene.gltf", 0.0f, -15.0f, 0.0f, 1.0f, 1.0f, 1.0f),
+		Model("bunny/scene.gltf", 0.0f, 0.0f, 0.0f, 10.0f, 10.0f, 10.0f),
+		Model("cube/scene.gltf", 0.0f, 0.0f, -3.0f, 1.0f, 1.0f, 1.0f)
+	};
+
 
 	while (!glfwWindowShouldClose(window)) {
-		// check for shit
+		// check for events in keyboard
 		glfwPollEvents();
 
 		// backgrond
 		glClearColor(0.39f, 0.39f, 0.39f, 1.00f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //no fucking clue what a buffer bit is but docs said so
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //also depth clear
 
-		//setup n shit
+		//setup camera
 		cam.Inputs(window);
-		cam.updateMatrix(60.0f, 0.1f, 100.0f);
-
-		model.Draw(shaderProgram, cam);
+		cam.updateMatrix(60.0f /*FOV*/, 0.1f/*near clip*/, 100.0f/*far clip/view dist*/);
+		
+		for (int i = 0; i < sizeof(modelArr) / sizeof(Model); i++) {
+			modelArr[i].Draw(shaderProgram, cam);
+		}
 
 		//swap
 		glfwSwapBuffers(window);

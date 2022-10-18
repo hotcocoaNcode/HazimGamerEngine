@@ -2,6 +2,10 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
 
+inline bool fileexists(const std::string& name) {
+	std::ifstream f(name.c_str());
+	return f.good();
+}
 
 Texture::Texture(const char* image, const char* nt, GLenum texType, GLenum slot) {
 	type = texType;
@@ -12,7 +16,15 @@ Texture::Texture(const char* image, const char* nt, GLenum texType, GLenum slot)
 	
 	// texure
 	int widthImg, heightImg, numColCh;
-	unsigned char* bytes = stbi_load(image, &widthImg, &heightImg, &numColCh, 0);
+
+	unsigned char* bytes;
+
+	if (fileexists(image)) {
+		bytes = stbi_load(image, &widthImg, &heightImg, &numColCh, 0);
+	}
+	else {
+		bytes = stbi_load("missing.png", &widthImg, &heightImg, &numColCh, 0);
+	}
 
 	glGenTextures(1, &ID);
 	glActiveTexture(slot);

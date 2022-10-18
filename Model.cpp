@@ -1,9 +1,30 @@
 #include"Model.h"
 
+/* removo
 Model::Model(const char* file)
 {
 	// Make a JSON object
 	text = get_file_contents(file);
+
+	if (text != "uhohwhoashit") {
+		JSON = json::parse(text);
+		// Get the binary data
+		Model::file = file;
+		data = getData();
+
+		// Traverse all nodes
+		traverseNode(0);
+	}
+}
+*/
+
+Model::Model(const char* file, float posit0, float posit1, float posit2, float scale0, float scale1, float scale2)
+{
+	// Make a JSON object
+	text = get_file_contents(file);
+
+	pos[0] = posit0; pos[1] = posit1; pos[2] = posit2;
+	sca[0] = scale0; sca[1] = scale1; sca[2] = scale2;
 
 	if (text != "uhohwhoashit") {
 		JSON = json::parse(text);
@@ -59,12 +80,12 @@ void Model::traverseNode(unsigned int nextNode, glm::mat4 matrix)
 	json node = JSON["nodes"][nextNode];
 
 	// Get translation if it exists
-	glm::vec3 translation = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 translation = glm::vec3(pos[0], pos[1], pos[2]);
 	if (node.find("translation") != node.end())
 	{
 		float transValues[3];
 		for (unsigned int i = 0; i < node["translation"].size(); i++)
-			transValues[i] = (node["translation"][i]);
+			transValues[i] = (node["translation"][i]) + pos[i];
 		translation = glm::make_vec3(transValues);
 	}
 	// Get quaternion if it exists
@@ -81,12 +102,12 @@ void Model::traverseNode(unsigned int nextNode, glm::mat4 matrix)
 		rotation = glm::make_quat(rotValues);
 	}
 	// Get scale if it exists
-	glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 scale = glm::vec3(sca[0], sca[1], sca[2]);
 	if (node.find("scale") != node.end())
 	{
 		float scaleValues[3];
 		for (unsigned int i = 0; i < node["scale"].size(); i++)
-			scaleValues[i] = (node["scale"][i]);
+			scaleValues[i] = (node["scale"][i]) + sca[i];
 		scale = glm::make_vec3(scaleValues);
 	}
 	// Get matrix if it exists

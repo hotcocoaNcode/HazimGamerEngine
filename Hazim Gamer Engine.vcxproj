@@ -80,8 +80,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\Ethan Lee\source\repos\Hazim Gamer Engine\libs\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Ethan Lee\source\repos\Hazim Gamer Engine\libs\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>L:\HazimGamerEngine\libs\include;C:\Users\Ethan Lee\source\repos\Hazim Gamer Engine\libs\include;$(IncludePath)</IncludePath>
+    <LibraryPath>L:\HazimGamerEngine\libs\lib;C:\Users\Ethan Lee\source\repos\Hazim Gamer Engine\libs\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
